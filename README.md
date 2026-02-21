@@ -161,6 +161,12 @@ Admin account can be auto-created from `BOOTSTRAP_ADMIN_EMAIL` and `BOOTSTRAP_AD
 - Rate limiting on `/api/*`
 - Parameter pollution prevention with hpp
 
+## Logs
+
+- Request logs are written to `logs/access.log`
+- Crash/runtime logs are written to `logs/error.log`
+- Console logging remains enabled for local debugging
+
 ## Scalability Note
 
 - Modular structure (`controllers`, `services-style utils`, `middlewares`, `validators`, `routes`) supports adding modules cleanly.

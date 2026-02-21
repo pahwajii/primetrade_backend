@@ -10,6 +10,7 @@ const swaggerUi = require("swagger-ui-express");
 const apiRateLimit = require("./middlewares/rateLimit.middleware");
 const { corsOrigin, nodeEnv } = require("./config/env");
 const openApiSpec = require("./docs/openapi");
+const { getAccessLogStream } = require("./config/logger");
 const v1Routes = require("./routes/v1");
 const { notFound, errorHandler } = require("./middlewares/error.middleware");
 
@@ -29,6 +30,7 @@ app.use(compression());
 
 if (nodeEnv !== "test") {
   app.use(morgan("dev"));
+  app.use(morgan("combined", { stream: getAccessLogStream() }));
 }
 
 app.get("/health", (req, res) => {

@@ -2,6 +2,7 @@ const app = require("./app");
 const connectDB = require("./config/db");
 const ensureAdminAccount = require("./config/bootstrapAdmin");
 const { port } = require("./config/env");
+const { writeErrorLog } = require("./config/logger");
 
 async function startServer() {
   try {
@@ -17,11 +18,17 @@ async function startServer() {
 }
 
 process.on("unhandledRejection", (reason) => {
-  console.error("Unhandled rejection:", reason);
+  const message = `Unhandled rejection: ${
+    reason && reason.stack ? reason.stack : String(reason)
+  }`;
+  console.error(message);
+  writeErrorLog(message);
 });
 
 process.on("uncaughtException", (error) => {
-  console.error("Uncaught exception:", error);
+  const message = `Uncaught exception: ${error && error.stack ? error.stack : String(error)}`;
+  console.error(message);
+  writeErrorLog(message);
   process.exit(1);
 });
 

@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: primetrade-backend
+    runtime: node
+    plan: free
+    autoDeploy: true
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 1d
+      - key: CORS_ORIGIN
+        value: "*"
+      - key: RATE_LIMIT_WINDOW_MS
+        value: "900000"
+      - key: RATE_LIMIT_MAX_REQUESTS
+        value: "120"
+      - key: BOOTSTRAP_ADMIN_EMAIL
+        value: admin@primetrade.local
+      - key: BOOTSTRAP_ADMIN_PASSWORD
+        sync: false
